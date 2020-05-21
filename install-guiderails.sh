@@ -43,6 +43,7 @@ if [ ! -d "$INSTALL_PATH" ]; then
 fi
 
 # Download the required files
+orig_dir=$(pwd)
 cd "$INSTALL_PATH"
 for file in "guiderails.sh" "guiderails.conf"
 do
@@ -107,4 +108,6 @@ echo "
  Enjoy!
  
  "
+# remove the installation script 
+cd $orig_dir 
 rm -f "$0"
