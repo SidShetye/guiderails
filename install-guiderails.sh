@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Sid Shetye - All Rights Reserved
 
 DOWNLOAD_BASE_URL="https://raw.githubusercontent.com/SidShetye/guiderails"
-RELEASE_VERSION="1.0.2"
+RELEASE_VERSION="1.0.3"
 INSTALL_PATH="/opt/share/guiderails"
 NAME="Guiderails"
 
@@ -53,6 +53,7 @@ done
 
 WHITE_LIST="$INSTALL_PATH/whitelist.conf"
 if [ ! -f $WHITE_LIST ]; then
+  echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/whitelist.conf ..."
   curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/whitelist.conf"
 fi
 
