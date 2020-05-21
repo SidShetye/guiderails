@@ -10,7 +10,7 @@ Guiderails is a wrapper to DNSMASQ that blacklists everything and then selective
 
 - ssh into the router
 - run `curl -sO https://raw.githubusercontent.com/SidShetye/guiderails/master/install-guiderails.sh && sh install-guiderails.sh`
-- You'll be prompted for a free IP address (e.g. `192.168.1.2`) that Guiderails can use to start it's own auxillary DNSMASQ based DNS service on your router. So if your router is at `192.168.1.1` on the `br0` interface, Guiderails can come up at `192.168.1.2` on `br0:guiderails`. Everything will run on your router itself and the overhead is quite low.
+- You'll be prompted for a free IP address (e.g. `192.168.1.2`) that Guiderails can use to start it's own auxiliary DNSMASQ based DNS service on your router. So if your router is at `192.168.1.1` on the `br0` interface, Guiderails can come up at `192.168.1.2` on `br0:guiderails`. Everything will run on your router itself and the overhead is quite low.
 
 > NOTE: You must ensure the router's DHCP service doesn't give this IP address to other clients, so increase the DHCP start as needed. To do so, log into your router Web UI -> LAN -> DHCP -> IP Pool Starting Address. You can also change this later in the `/opt/share/guiderails/guiderails.conf` file under the `listen-address=192.168.1.2` setting.
 
@@ -26,12 +26,12 @@ The initial whitelist is roughly what I needed for my son's Google Classroom usa
 
 ### 3. Instruct kids devices to use Guiderails
 
-Finally, you set the kids devices to use this auxillary DNS server. 
+Finally, you set the kids devices to use this auxiliary DNS server. 
 
 - Log into your router's Web UI -> LAN -> DNSFilter
 - `Enable DNS-based Filtering` = `ON`
 - `Global Filter Mode` can be whatever you want (e.g. No Filtering). This applies to non-kids devices.
-- Under `Custom (user-defined) DNS 1` put the Guiderails auxillary IP address used during installation. e.g. `192.168.1.2`
+- Under `Custom (user-defined) DNS 1` put the Guiderails auxiliary IP address used during installation. e.g. `192.168.1.2`
 - On the same page, at the bottom, select your kids' devices' mac address -> Filtering mode = `Custom 1`
 - Hit `Apply` on the bottom
 

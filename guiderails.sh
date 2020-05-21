@@ -70,11 +70,11 @@ display_help() {
  internet experience. Typical use case is to support young children's online
  education by blocking ALL the internet sites, except for a dozen or two sites
  manually permitted by parents/teachers for a safer online experience.
- Usually, Guiderails' DNSMASQ instance will be an auxillary DNS server 
+ Usually, Guiderails' DNSMASQ instance will be an auxiliary DNS server 
  used only by childrens' devices while the rest of the network uses a less 
- restricted primary DNS server. This auxillary DNS server will run on
+ restricted primary DNS server. This auxiliary DNS server will run on
  the router itself but on a separate, dedicated virtual IP address
- (e.g. auxillary on 192.168.1.2 if primary is on 192.168.1.1 and 
+ (e.g. auxiliary on 192.168.1.2 if primary is on 192.168.1.1 and 
  both on the router itself
 
  Usage: guiderails [option]
@@ -93,7 +93,7 @@ display_help() {
 
 print_banner(){
     echo "
-    $NW_INTERFACE ($NW_IP) for $NAME auxillary DNS server
+    $NW_INTERFACE ($NW_IP) for $NAME auxiliary DNS server
 
     NOTE: If this seems wrong, edit $CONF_FILE and retry.
     "

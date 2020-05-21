@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Sid Shetye - All Rights Reserved
 
 DOWNLOAD_BASE_URL="https://raw.githubusercontent.com/SidShetye/guiderails"
-RELEASE_VERSION="1.0.0"
+RELEASE_VERSION="1.0.3"
 INSTALL_PATH="/opt/share/guiderails"
 NAME="Guiderails"
 
@@ -26,11 +26,11 @@ ipvalid() {
 
 # Sanity check dependencies
 if [ ! -f /usr/sbin/curl ]; then
-	echo "
+  echo "
  Sorry, but $NAME requires curl for installation to continue.
  Try installing manually from https://github.com/SidShetye/guiderails
  "	
-	exit 1
+  exit 1
 fi
 
 echo "
@@ -39,7 +39,7 @@ Starting $NAME installation ...
 
 # Create the installation folder
 if [ ! -d "$INSTALL_PATH" ]; then 
-	mkdir -p $INSTALL_PATH
+  mkdir -p $INSTALL_PATH
 fi
 
 # Download the required files
@@ -47,14 +47,25 @@ orig_dir=$(pwd)
 cd "$INSTALL_PATH"
 for file in "guiderails.sh" "guiderails.conf"
 do
-	echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file ..."
-	curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file"
+  echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file ..."
+  curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file"
 done
+
+WHITE_LIST="$INSTALL_PATH/whitelist.conf"
+if [ ! -f $WHITE_LIST ]; then
+  echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/whitelist.conf ..."
+  curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/whitelist.conf"
+fi
+
+
+# Add as link to /opt/bin to run from anywhere manually
+chmod 755 "$INSTALL_PATH/guiderails.sh"
+ln -fs "$INSTALL_PATH/guiderails.sh" /opt/bin/guiderails
 
 # Ask user for the reserved IP address for Guiderails
 CONF_FILE="$INSTALL_PATH/guiderails.conf"
 echo "
-What IP address should Guiderails start it's auxillary DNS service? 
+What IP address should Guiderails start it's auxiliary DNS service? 
 
 This *CANNOT* be the router's default IP address (e.g. 192.168.1.1) or 
 any other clients' IP address, so increase the DHCP start as needed 
@@ -66,7 +77,7 @@ TIP: You can change this later in the $CONF_FILE file under the
 "
 default_ip="192.168.1.2"
 while true; do
-  read -p "Enter Guiderails' auxillary IPv4 [$default_ip]: " ip
+  read -p "Enter Guiderails' auxiliary IPv4 [$default_ip]: " ip
   if [ -z "$ip" ]; then
     ip=$default_ip
   fi
@@ -81,19 +92,19 @@ sed -i -E "s/^listen-address=(.+)/listen-address=$ip/" $CONF_FILE
 merlinEntryPoint="/jffs/scripts/dnsmasq.postconf"
 # Check for and create the entry point file 
 if [ ! -f $merlinEntryPoint ]; then
-	echo "Creating $merlinEntryPoint ..."
-	touch $merlinEntryPoint
-	echo '#!/bin/sh' > $merlinEntryPoint
-	chmod a+x $merlinEntryPoint
+  echo "Creating $merlinEntryPoint ..."
+  touch $merlinEntryPoint
+  echo '#!/bin/sh' > $merlinEntryPoint
+  chmod a+x $merlinEntryPoint
 fi
 
 # Add the entrypoint command if it doesn't already exist
 entryCmd=". $INSTALL_PATH/guiderails.sh restart"
 if grep -q $entryCmd $merlinEntryPoint; then 
-	echo "Auto-start for $NAME already exists !"
+  echo "Auto-start for $NAME already exists !"
 else 
-	echo "Enabling auto-start for $NAME ..."
-	echo $entryCmd >> $merlinEntryPoint
+  echo "Enabling auto-start for $NAME ..."
+  echo $entryCmd >> $merlinEntryPoint
 fi
 
 echo "Starting Guiderails ..."
