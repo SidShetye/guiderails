@@ -107,3 +107,4 @@ echo "
  Enjoy!
  
  "
+rm -f "$0"
