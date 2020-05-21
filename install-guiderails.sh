@@ -51,6 +51,10 @@ do
 	curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file"
 done
 
+# Add as link to /opt/bin to run from anywhere manually
+chmod 755 "$INSTALL_PATH/guiderails.sh"
+ln -fs "$INSTALL_PATH/guiderails.sh" /opt/bin/guiderails
+
 # Ask user for the reserved IP address for Guiderails
 CONF_FILE="$INSTALL_PATH/guiderails.conf"
 echo "
