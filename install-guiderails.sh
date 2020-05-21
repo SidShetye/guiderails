@@ -54,7 +54,7 @@ done
 # Ask user for the reserved IP address for Guiderails
 CONF_FILE="$INSTALL_PATH/guiderails.conf"
 echo "
-What IP address should Guiderails start it's auxillary DNS service? 
+What IP address should Guiderails start it's auxiliary DNS service? 
 
 This *CANNOT* be the router's default IP address (e.g. 192.168.1.1) or 
 any other clients' IP address, so increase the DHCP start as needed 
@@ -66,7 +66,7 @@ TIP: You can change this later in the $CONF_FILE file under the
 "
 default_ip="192.168.1.2"
 while true; do
-  read -p "Enter Guiderails' auxillary IPv4 [$default_ip]: " ip
+  read -p "Enter Guiderails' auxiliary IPv4 [$default_ip]: " ip
   if [ -z "$ip" ]; then
     ip=$default_ip
   fi
