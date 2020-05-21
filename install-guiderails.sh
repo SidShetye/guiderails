@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Sid Shetye - All Rights Reserved
 
 DOWNLOAD_BASE_URL="https://raw.githubusercontent.com/SidShetye/guiderails"
-RELEASE_VERSION="1.0.1"
+RELEASE_VERSION="1.0.2"
 INSTALL_PATH="/opt/share/guiderails"
 NAME="Guiderails"
 
