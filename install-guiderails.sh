@@ -3,7 +3,6 @@
 # Guiderails licensed under the MIT license
 # Copyright (c) 2020 Sid Shetye - All Rights Reserved
 
-# https://raw.githubusercontent.com/SidShetye/guiderails/0.2.1-beta1/guiderails.sh
 DOWNLOAD_BASE_URL="https://raw.githubusercontent.com/SidShetye/guiderails"
 RELEASE_VERSION="1.0.0"
 INSTALL_PATH="/opt/share/guiderails"
@@ -33,6 +32,10 @@ if [ ! -f /usr/sbin/curl ]; then
  "	
 	exit 1
 fi
+
+echo "
+Starting $NAME installation ...
+"
 
 # Create the installation folder
 if [ ! -d "$INSTALL_PATH" ]; then 
@@ -96,6 +99,11 @@ echo "Starting Guiderails ..."
 service restart_dnsmasq
 
 echo "
- Installation completed !! 
+ Installation completed !
+
  Feel free to change the whitelists by \"nano $INSTALL_PATH/guiderails.conf\" 
- and then issue \"service restart_dnsmasq\" for changes to be reflected. Enjoy!"
+ followed by a \"service restart_dnsmasq\" to restart. 
+ 
+ Enjoy!
+ 
+ "
