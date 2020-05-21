@@ -26,11 +26,11 @@ ipvalid() {
 
 # Sanity check dependencies
 if [ ! -f /usr/sbin/curl ]; then
-	echo "
+  echo "
  Sorry, but $NAME requires curl for installation to continue.
  Try installing manually from https://github.com/SidShetye/guiderails
  "	
-	exit 1
+  exit 1
 fi
 
 echo "
@@ -39,7 +39,7 @@ Starting $NAME installation ...
 
 # Create the installation folder
 if [ ! -d "$INSTALL_PATH" ]; then 
-	mkdir -p $INSTALL_PATH
+  mkdir -p $INSTALL_PATH
 fi
 
 # Download the required files
@@ -47,9 +47,15 @@ orig_dir=$(pwd)
 cd "$INSTALL_PATH"
 for file in "guiderails.sh" "guiderails.conf"
 do
-	echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file ..."
-	curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file"
+  echo "Downloading $DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file ..."
+  curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/$file"
 done
+
+WHITE_LIST="$INSTALL_PATH/whitelist.conf"
+if [ ! -f $WHITE_LIST ]; then
+  curl -sOL "$DOWNLOAD_BASE_URL/$RELEASE_VERSION/whitelist.conf"
+fi
+
 
 # Add as link to /opt/bin to run from anywhere manually
 chmod 755 "$INSTALL_PATH/guiderails.sh"
@@ -85,19 +91,19 @@ sed -i -E "s/^listen-address=(.+)/listen-address=$ip/" $CONF_FILE
 merlinEntryPoint="/jffs/scripts/dnsmasq.postconf"
 # Check for and create the entry point file 
 if [ ! -f $merlinEntryPoint ]; then
-	echo "Creating $merlinEntryPoint ..."
-	touch $merlinEntryPoint
-	echo '#!/bin/sh' > $merlinEntryPoint
-	chmod a+x $merlinEntryPoint
+  echo "Creating $merlinEntryPoint ..."
+  touch $merlinEntryPoint
+  echo '#!/bin/sh' > $merlinEntryPoint
+  chmod a+x $merlinEntryPoint
 fi
 
 # Add the entrypoint command if it doesn't already exist
 entryCmd=". $INSTALL_PATH/guiderails.sh restart"
 if grep -q $entryCmd $merlinEntryPoint; then 
-	echo "Auto-start for $NAME already exists !"
+  echo "Auto-start for $NAME already exists !"
 else 
-	echo "Enabling auto-start for $NAME ..."
-	echo $entryCmd >> $merlinEntryPoint
+  echo "Enabling auto-start for $NAME ..."
+  echo $entryCmd >> $merlinEntryPoint
 fi
 
 echo "Starting Guiderails ..."
